@@ -317,31 +317,47 @@ ul, ol { padding-left: 1.2em; }
 /* ----- 8. Héro -------------------------------------------------------------- */
 
 .n-hero {
-	background:
-		radial-gradient(ellipse 60% 50% at 85% 12%, var(--n-yellow-soft), transparent 70%),
-		linear-gradient(180deg, var(--n-cream) 0%, var(--n-white) 100%);
-	overflow: hidden;
-}
-.n-hero__grid {
-	display: grid; gap: 2.2rem;
-	padding-block: clamp(2.6rem, 7vw, 5.5rem);
+	position: relative;
+	min-height: 86vh;
+	display: flex;
 	align-items: center;
+	overflow: hidden;
+	background: var(--n-black);
+}
+.n-hero__bg { position: absolute; inset: 0; z-index: 0; }
+.n-hero__bg-img {
+	width: 100%; height: 100%;
+	object-fit: cover; object-position: 68% 20%;
+	animation: n-hero-zoom 18s ease-out forwards;
+}
+.n-hero__bg::after {
+	content: "";
+	position: absolute; inset: 0;
+	background: linear-gradient(100deg, rgba(10,8,6,.88) 0%, rgba(10,8,6,.66) 38%, rgba(10,8,6,.3) 64%, rgba(10,8,6,.1) 100%);
+}
+@keyframes n-hero-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+.n-hero__content {
+	position: relative; z-index: 1;
+	max-width: 36rem;
+	padding-block: clamp(5rem, 18vw, 8rem) clamp(3.2rem, 9vw, 5rem);
 }
 
 .n-hero__badge {
 	display: inline-flex; align-items: center; gap: 0.55rem;
-	background: var(--n-white);
-	border: 1px solid var(--n-line);
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	color: var(--n-white);
 	border-radius: 999px;
 	padding: 0.45rem 1.1rem;
 	font-size: 0.8rem; font-weight: 500;
 	letter-spacing: 0.14em; text-transform: uppercase;
 	margin-bottom: 1.4rem;
-	box-shadow: var(--n-shadow-soft);
+	backdrop-filter: blur(6px);
 }
 
 /* Éclat discret du diamant */
-.n-hero__badge-diamond { position: relative; display: inline-flex; color: var(--n-gold); }
+.n-hero__badge-diamond { position: relative; display: inline-flex; color: var(--n-yellow); }
 .n-hero__badge-diamond::after {
 	content: "";
 	position: absolute; inset: -3px;
@@ -354,29 +370,31 @@ ul, ol { padding-left: 1.2em; }
 	86% { opacity: 1; transform: scale(1.25); }
 }
 
-.n-hero__title { margin-bottom: 1rem; }
-.n-hero__text { font-size: 1.13rem; color: var(--n-ink-soft); max-width: 34rem; margin-bottom: 1.8rem; }
+.n-hero__title { margin-bottom: 1rem; color: var(--n-white); }
+.n-hero__text { font-size: 1.13rem; color: rgba(255, 253, 247, 0.86); max-width: 34rem; margin-bottom: 1.8rem; }
 
 .n-hero__ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.n-btn--on-dark { color: var(--n-white); border-color: rgba(255, 255, 255, 0.55); }
+.n-btn--on-dark:hover { background: var(--n-white); color: var(--n-black); border-color: var(--n-white); }
 
 .n-hero__props {
 	display: flex; flex-wrap: wrap; gap: 1.2rem;
 	list-style: none; margin: 1.8rem 0 0; padding: 0;
-	font-size: 0.88rem; letter-spacing: 0.03em; color: var(--n-ink-soft);
+	font-size: 0.88rem; letter-spacing: 0.03em; color: rgba(255, 253, 247, 0.82);
 }
 .n-hero__props li { display: inline-flex; align-items: center; gap: 0.4rem; }
-.n-hero__props .n-icon { color: var(--n-green); }
+.n-hero__props .n-icon { color: var(--n-yellow); }
 
-.n-hero__media { margin: 0; position: relative; }
-.n-hero__media img {
-	width: 100%;
-	border-radius: var(--n-radius);
-	box-shadow: var(--n-shadow);
-	animation: n-float 7s ease-in-out infinite;
+.n-hero__scroll {
+	position: absolute; z-index: 1; left: 50%; bottom: 1.6rem;
+	transform: translateX(-50%);
+	display: inline-flex; color: var(--n-white); opacity: 0.85;
+	animation: n-bounce 2.2s ease-in-out infinite;
 }
-@keyframes n-float {
-	0%, 100% { transform: translateY(0); }
-	50% { transform: translateY(-8px); }
+.n-hero__scroll:hover { opacity: 1; }
+@keyframes n-bounce {
+	0%, 100% { transform: translate(-50%, 0); }
+	50% { transform: translate(-50%, 8px); }
 }
 
 /* ----- 9. Réassurance ------------------------------------------------------- */
@@ -1213,7 +1231,7 @@ ul, ol { padding-left: 1.2em; }
 @media (prefers-reduced-motion: reduce) {
 	html { scroll-behavior: auto; }
 	.reveal { opacity: 1; transform: none; transition: none; }
-	.n-hero__media img { animation: none; }
+	.n-hero__bg-img, .n-hero__scroll { animation: none; }
 	.n-hero__badge-diamond::after { animation: none; }
 	*, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
@@ -1231,7 +1249,8 @@ ul, ol { padding-left: 1.2em; }
 }
 
 @media (min-width: 900px) {
-	.n-hero__grid { grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; }
+	.n-hero { min-height: 92vh; }
+	.n-hero__bg-img { object-position: 65% 15%; }
 	.n-focus__grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; }
 	.n-bundle__card { grid-template-columns: 1.05fr 0.95fr; }
 	.n-why__grid { grid-template-columns: 1.05fr 0.95fr; gap: 4rem; }
@@ -1262,8 +1281,9 @@ ul, ol { padding-left: 1.2em; }
 }
 
 @media (max-width: 899px) {
-	.n-hero__media { order: -1; }
-	.n-hero__media img { max-height: 420px; object-fit: cover; width: 100%; }
+	.n-hero { min-height: 76vh; }
+	.n-hero__bg-img { object-position: 58% 12%; }
+	.n-hero__content { padding-block: clamp(4.5rem, 22vw, 6rem) 3rem; }
 	.n-why__frame { display: none; }
 	/* Espace pour la barre d'achat sticky sur les fiches produit */
 	.single-product .n-woo { padding-bottom: 110px; }
