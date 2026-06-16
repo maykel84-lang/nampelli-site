@@ -3,18 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sérum Éclat Vitamine C — NAMPELLI (aperçu fiche produit)</title>
+<title>Sérum Éclat Vitamine C — NAMPELLI</title>
+<meta name="description" content="Sérum Éclat Vitamine C NAMPELLI : illumine le teint, affine le grain de peau et redonne son éclat naturel au visage. Flacon 30 ml, livraison offerte dès 49 €.">
+<meta property="og:type" content="product">
+<meta property="og:title" content="Sérum Éclat Vitamine C — NAMPELLI">
+<meta property="og:description" content="Illumine le teint et révèle l'éclat naturel de la peau.">
+<meta property="og:image" content="assets/img/serum.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
-<style>
-  .reveal{opacity:1 !important;transform:none !important;}
-  .apercu-tag{position:fixed;z-index:200;right:14px;top:14px;background:rgba(0,0,0,.78);color:#FDE618;
-    font:500 11px/1 Jost,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:8px 12px;border-radius:999px;}
-</style>
 </head>
 <body class="no-js single-product">
+<script>document.body.classList.remove('no-js')</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <g id="i-diamond"><path d="M7 4h10l4 5.5L12 21 3 9.5 7 4Z"/><path d="M3 9.5h18M7 4l3 5.5L12 4l2 5.5L17 4M10 9.5 12 21l2-11.5"/></g>
@@ -95,7 +96,7 @@
   </div>
 
   <!-- ACCORDÉONS DÉTAILS -->
-  <section class="n-product-details">
+  <section class="n-product-details reveal">
     <details class="n-acc" open><summary><h2>Description</h2><svg class="n-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#i-arrow"/></svg></summary><div class="n-acc__body"><p>Le Sérum Éclat Vitamine C NAMPELLI accompagne la peau au quotidien pour raviver sa luminosité et sublimer visiblement le teint. Sa texture légère, non grasse et non collante, pénètre en quelques secondes.</p><p>La vitamine C, actif antioxydant de référence, agit sur trois fronts : elle illumine le teint terne, aide à unifier la peau en estompant progressivement taches et marques, et protège des agressions quotidiennes. Flacon compte-gouttes ambré de 30 ml.</p></div></details>
     <details class="n-acc"><summary><h2>Pour qui ?</h2><svg class="n-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#i-arrow"/></svg></summary><div class="n-acc__body"><p>Tous les types de peau en quête d'éclat : teint terne, fatigue, exposition urbaine. Les peaux sensibles l'introduisent progressivement (un jour sur deux la première semaine).</p></div></details>
     <details class="n-acc" open><summary><h2>Comment l'utiliser</h2><svg class="n-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><use href="#i-arrow"/></svg></summary><div class="n-acc__body"><p>Sur peau propre et sèche, déposez 3 à 4 gouttes dans le creux de la main ou directement sur le visage. Tapotez délicatement sur l'ensemble du visage et du cou jusqu'à absorption, puis appliquez votre crème.</p></div></details>
@@ -112,7 +113,7 @@
   </section>
 
   <!-- COMPLÉTEZ VOTRE ROUTINE (upsells) -->
-  <section class="up-sells upsells products">
+  <section class="up-sells upsells products reveal">
     <h2>Complétez votre routine</h2>
     <ul class="n-products-grid">
       <li class="n-product-card"><a class="n-product-card__media" href="#"><img src="assets/img/nettoyant.jpg" alt="Nettoyant Purifiant"></a><div class="n-product-card__body"><h3><a href="#">Nettoyant Purifiant</a></h3><p class="n-card__tagline">Purifie la peau en douceur et prépare votre routine éclat.</p><p class="n-price">19,90&nbsp;€</p><a class="n-btn n-btn--outline" href="#">Découvrir</a></div></li>
@@ -136,10 +137,41 @@
 </div></footer>
 
 <!-- BARRE D'ACHAT STICKY MOBILE -->
-<div class="n-sticky-atc is-visible" id="n-sticky-atc">
+<div class="n-sticky-atc" id="n-sticky-atc">
   <div class="n-sticky-atc__info"><img src="assets/img/serum.jpg" alt=""><div><strong>Sérum Éclat Vitamine C</strong><span class="n-sticky-atc__price">34,90&nbsp;€</span></div></div>
   <button type="button" class="n-btn n-btn--primary">Ajouter au panier</button>
 </div>
+
+<script>
+(function () {
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && reveals.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  var bar = document.getElementById('n-sticky-atc');
+  var trigger = document.querySelector('.single_add_to_cart_button');
+  if (bar && trigger && 'IntersectionObserver' in window) {
+    var barIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var scrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        bar.classList.toggle('is-visible', scrolledPast);
+      });
+    }, { threshold: 0 });
+    barIo.observe(trigger);
+  }
+})();
+</script>
 
 </body>
 </html>
